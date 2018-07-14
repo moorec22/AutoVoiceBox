@@ -1,0 +1,23 @@
+
+<div id="phrase_form">
+  <input id="phrase_input" />
+  <input id="say" type="submit" value="Say" />
+  <input id="save" type="submit" value="Save" />
+</div>
+
+
+<h1>Listing phrases</h1>
+
+<table>
+  <tr>
+    <th>Text</th>
+    <th></th>
+  </tr>
+
+  <% @phrases.each do |phrase| %>
+    <tr>
+      <td><%= phrase.text %></td>
+      <td><input id="say" type="submit" value="Say" /></td>
+    </tr>
+  <% end %>
+</table>
