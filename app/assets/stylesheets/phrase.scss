@@ -1,3 +1,51 @@
 // Place all the styles related to the Phrase controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.column {
+  float: left;
+  width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.box {
+  width: 80%;
+  border: 2px solid gray;
+  padding: 25px;
+  margin: 0px;
+}
+
+.phrase_new {
+  width: 30%;
+}
+
+.phrase_delete {
+  float: right;
+}
+
+.phrase_say {
+  float: right;
+}
+
+.category_delete {
+  float: right;
+}
+
+.category_title_name {
+  float: left;
+}
+
+.category_body {
+  clear: both;
+}
+
+
+.draggable {
+  -webkit-user-drag: element;
+}

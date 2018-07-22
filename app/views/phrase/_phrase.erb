@@ -1,0 +1,6 @@
+<div id="phrase_box_<%= phrase.id %>" phrase_id="<%= phrase.id %>" class="box phrase_box" draggable="true">
+  <%= phrase.text %>
+  <input id="say_<%= phrase.id %>" class="phrase_say" text="<%= phrase.text %>" type="submit" value="Say" />
+  <input phrase_id="<%= phrase.id %>" class="phrase_delete" type="submit" value="Delete" />
+</div>
+

@@ -1,23 +1,32 @@
 
-<div id="phrase_form">
+<div id="phrase_form" align="center">
   <input id="phrase_input" />
   <input id="say" type="submit" value="Say" />
-  <input id="save" type="submit" value="Save" />
+  <br />
+  <br />
+  <div id="phrase_queue">
+  </div>
 </div>
 
+<br />
+<br />
+<br />
 
-<h1>Listing phrases</h1>
+<div class="row">
+  <div class="column">
+    <%= render partial: "category_list", locals: { categories: @categories.to_a.values_at(
+      *((0...@categories.size).to_a.select { |i| i % 2 == 0 })
+    ) } %>
+  </div>
+  <div class="column">
+    <%= render partial: "category_list", locals: { categories: @categories.to_a.values_at(
+      *((0...@categories.size).to_a.select { |i| i % 2 == 1 })
+    ) } %>
+  </div>
+</div>
 
-<table>
-  <tr>
-    <th>Text</th>
-    <th></th>
-  </tr>
-
-  <% @phrases.each do |phrase| %>
-    <tr>
-      <td><%= phrase.text %></td>
-      <td><input id="say" type="submit" value="Say" /></td>
-    </tr>
-  <% end %>
-</table>
+<br />
+<div align="center">
+  <input id="new_category_input" />
+  <input id="new_category_button" type="submit" value="New Category" />
+</div>
