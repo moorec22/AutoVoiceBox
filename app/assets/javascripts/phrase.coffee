@@ -14,12 +14,15 @@ $ ->
       error: ->
         console.log('error')
 
-  save = (phrase, category_id) ->
+  save = (phrase) ->
     $.ajax
       url: '/phrase'
       type: 'POST'
-      data : {'phrase': phrase, 'category_id': category_id}
+      data : {'phrase': phrase}
       success: (data, status, response) ->
+        $('#phrase_queue').append(response.responseText)
+        $('#phrase_queue').append('<br />')
+        phrase_setup()
       error: ->
         console.log('error')
 
@@ -38,6 +41,7 @@ $ ->
       type: 'DELETE'
       data: {'phrase_id': phrase_id}
       success: (data, status,response) ->
+        $("[phrase_id='" + phrase_id + "']").remove()
       error: ->
         console.log('error')
 
@@ -76,30 +80,37 @@ $ ->
       update_category(phrase_id, category_id)
     else
 
+  phrase_setup = ->
+    $('#say').click ->
+      say($('#phrase_input').val())
 
-  $('#save').click ->
-    save($('#phrase_input').val())
+    $('#save').click ->
+      save($('#phrase_input').val())
 
-  $(".phrase_say").click ->
-    say(this.getAttribute('text'))
+    $(".phrase_say").click ->
+      say(this.getAttribute('text'))
 
-  $(".phrase_delete").click ->
-    destroy(this.getAttribute('phrase_id'))
+    $(".phrase_delete").click ->
+      destroy(this.getAttribute('phrase_id'))
 
-  $(".phrase_box").on('dragstart', ->
-    drag(event)
-  )
+    $(".phrase_box").on('dragstart', ->
+      drag(event)
+    )
 
-  $(".category_box").on('dragover', ->
-    allowDrop(event)
-  )
+  category_setup = ->
+    $(".category_box").on('dragover', ->
+      allowDrop(event)
+    )
 
-  $(".category_box").on('drop', ->
-    drop(event)
-  )
+    $(".category_box").on('drop', ->
+      drop(event)
+    )
 
-  $("#new_category_button").click ->
-    save_category($("#new_category_input").val())
+    $("#new_category_button").click ->
+      save_category($("#new_category_input").val())
 
-  $(".category_delete").click ->
-    delete_category(this.getAttribute('category_id'))
+    $(".category_delete").click ->
+      delete_category(this.getAttribute('category_id'))
+
+  phrase_setup()
+  category_setup()

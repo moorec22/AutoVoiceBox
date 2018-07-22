@@ -8,6 +8,7 @@
   <div id="phrase_queue">
     <% @phrases_without_category.each do |phrase| %>
       <%= render partial: "phrase", locals: { phrase: phrase } %>
+      <br />
     <% end %>
   </div>
 </div>

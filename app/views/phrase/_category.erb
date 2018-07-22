@@ -6,6 +6,7 @@
   <div class="category_body">
     <% category.phrases.each do |phrase| %>
       <%= render partial: "phrase", locals: { phrase: phrase } %>
+      <br />
     <% end %>
   </div>
 </div>

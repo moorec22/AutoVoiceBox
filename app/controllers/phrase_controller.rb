@@ -8,6 +8,7 @@ class PhraseController < ApplicationController
     category_id = params[:category_id]
     category = category_id ? Category.find(category_id) : nil
     phrase = Phrase.create!(text: params[:phrase], category: category)
+    render partial: 'phrase', locals: { phrase: phrase }
   end
 
   def destroy
