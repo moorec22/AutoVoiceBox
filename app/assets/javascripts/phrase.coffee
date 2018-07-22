@@ -41,13 +41,12 @@ $ ->
       error: ->
         console.log('error')
 
-  update_category = (phrase_id, category_id, on_success) ->
+  update_category = (phrase_id, category_id) ->
     $.ajax
       url: '/phrase'
       type: 'UPDATE'
       data: {'type': 'CATEGORY', 'phrase_id': phrase_id, 'category_id': category_id}
       success: (data, status,response) ->
-        on_success()
       error: ->
         console.log('error')
 
@@ -73,34 +72,10 @@ $ ->
     phrase = document.getElementById(id)
     phrase_id = phrase.getAttribute("phrase_id")
     category_id = event.target.getAttribute('category_id')
-    on_success = ->
-      event.target.appendChild(phrase)
     if phrase_id
-      update_category(phrase_id, category_id, on_success)
+      update_category(phrase_id, category_id)
     else
 
-
-
-  $('#say').click ->
-    phrase = $('#phrase_input').val()
-    say(phrase)
-    phraseQueue = document.getElementById('phrase_queue')
-    newPhrase = document.createElement('div')
-    newPhrase.classList.add('phrase_new')
-    newPhrase.classList.add('box')
-    newPhrase.classList.add('phrase_box')
-    newPhrase.draggable = 'true'
-    newPhrase.innerHTML = phrase
-
-    sayButton = document.createElement('input')
-    sayButton.classList.add('phrase_say')
-    sayButton.text = phrase
-    sayButton.type = 'submit'
-    sayButton.value = "Say"
-    sayButton.onclick = -> say(phrase)
-    newPhrase.append(sayButton)
-
-    phraseQueue.append(newPhrase)
 
   $('#save').click ->
     save($('#phrase_input').val())
