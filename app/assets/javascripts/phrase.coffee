@@ -15,7 +15,7 @@ $ ->
       data : {'phrase': phrase}
       success: (data, status, response) ->
         $('#phrase_queue').append(response.responseText)
-        $('#phrase_queue').append('<br />')
+        $('#phrase_input').val("")
         phrase_setup()
       error: ->
         console.log('error')
@@ -92,15 +92,15 @@ $ ->
       update_category(phrase_id, category_id, on_success)
     else
 
+  $('#say').click ->
+    say($('#phrase_input').val())
+
+  $('#save').click ->
+    input = $('#phrase_input').val()
+    if input
+      save(input)
+
   phrase_setup = ->
-    $('#say').click ->
-      say($('#phrase_input').val())
-
-    $('#save').click ->
-      input = $('#phrase_input').val()
-      if input
-        save(input)
-
     $(".phrase_say").click ->
       say(this.getAttribute('text'))
 
