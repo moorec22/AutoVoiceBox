@@ -18,12 +18,12 @@
 <br />
 
 <div class="row">
-  <div class="column">
+  <div id="category_column_left" class="column">
     <%= render partial: "category_list", locals: { categories: @categories.to_a.values_at(
       *((0...@categories.size).to_a.select { |i| i % 2 == 0 })
     ) } %>
   </div>
-  <div class="column">
+  <div id="category_column_right" class="column">
     <%= render partial: "category_list", locals: { categories: @categories.to_a.values_at(
       *((0...@categories.size).to_a.select { |i| i % 2 == 1 })
     ) } %>

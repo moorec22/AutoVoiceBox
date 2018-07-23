@@ -1,9 +1,3 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
-#
-# TODO: Make more methods that return this stuff from AJAX
-
 $ ->
   say = (phrase) ->
     $.ajax
@@ -32,6 +26,14 @@ $ ->
       type: 'POST'
       data : {'name': category_name}
       success: (data, status, response) ->
+        left = $("#category_column_left")
+        right = $("#category_column_right")
+        if (left.children().size() <= right.children().size())
+          left.append(response.responseText)
+        else
+          right.append(response.responseText)
+        category_setup()
+        $("#new_category_input").val("")
       error: ->
         console.log('error')
 
@@ -45,12 +47,13 @@ $ ->
       error: ->
         console.log('error')
 
-  update_category = (phrase_id, category_id) ->
+  update_category = (phrase_id, category_id, on_success) ->
     $.ajax
       url: '/phrase'
       type: 'UPDATE'
       data: {'type': 'CATEGORY', 'phrase_id': phrase_id, 'category_id': category_id}
-      success: (data, status,response) ->
+      success: (data, status, response) ->
+        on_success()
       error: ->
         console.log('error')
 
@@ -60,6 +63,7 @@ $ ->
       type: 'DELETE'
       data: {category_id: category_id}
       success: (data, status, response) ->
+        $("[category_id='" + category_id + "']").remove()
       error: ->
         console.log('error')
 
@@ -70,14 +74,22 @@ $ ->
   drag = (event) ->
     event.dataTransfer.setData("phrase", event.target.id)
 
+  getParentCategoryBox = (element) ->
+    while (element && !element.classList.contains('category_box'))
+      element = element.parentNode
+    return element
+
   drop = (event) ->
     event.preventDefault()
     id = event.dataTransfer.getData("phrase")
     phrase = document.getElementById(id)
     phrase_id = phrase.getAttribute("phrase_id")
-    category_id = event.target.getAttribute('category_id')
+    box = getParentCategoryBox(event.target)
+    category_id = box.getAttribute('category_id')
+    on_success = ->
+      box.appendChild(phrase)
     if phrase_id
-      update_category(phrase_id, category_id)
+      update_category(phrase_id, category_id, on_success)
     else
 
   phrase_setup = ->
@@ -85,7 +97,9 @@ $ ->
       say($('#phrase_input').val())
 
     $('#save').click ->
-      save($('#phrase_input').val())
+      input = $('#phrase_input').val()
+      if input
+        save(input)
 
     $(".phrase_say").click ->
       say(this.getAttribute('text'))
@@ -105,12 +119,16 @@ $ ->
     $(".category_box").on('drop', ->
       drop(event)
     )
-
-    $("#new_category_button").click ->
-      save_category($("#new_category_input").val())
-
+  
     $(".category_delete").click ->
       delete_category(this.getAttribute('category_id'))
 
+  $("#new_category_button").click ->
+    input = $("#new_category_input").val()
+    if input
+      save_category(input)
+
+
   phrase_setup()
   category_setup()
+

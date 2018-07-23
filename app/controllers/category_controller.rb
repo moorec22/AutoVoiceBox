@@ -1,7 +1,8 @@
 class CategoryController < ApplicationController
   def create
     name = params[:name]
-    Category.create(name: name)
+    category = Category.create(name: name)
+    render partial: "phrase/category", locals: { category: category }
   end
 
   def destroy
