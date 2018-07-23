@@ -4,7 +4,7 @@ Hello! This is the Auto Voice Box, for all your Auto talking needs!
 
 ## Setup
 
-The first time you run this, you should start with the following command:
+The first time you run Auto Voice Box, you should start with the following command:
 
 `rails db:migrate`
 
