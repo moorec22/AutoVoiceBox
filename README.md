@@ -1,24 +1,16 @@
-# README
+# AUTO VOICE BOX
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Hello! This is the Auto Voice Box, for all your Auto talking needs!
 
-Things you may want to cover:
+## Setup
 
-* Ruby version
+The first time you run this, you should start with the following command:
 
-* System dependencies
+`rails db:migrate`
 
-* Configuration
+Only needs to be done once!!!
 
-* Database creation
+That should be it! To start the server, just type
 
-* Database initialization
+`rails server`
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
