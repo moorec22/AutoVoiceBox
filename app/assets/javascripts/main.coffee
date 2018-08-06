@@ -73,6 +73,7 @@ $ ->
 
   drag = (event) ->
     event.dataTransfer.setData("phrase", event.target.id)
+    console.log(event)
 
   getParentCategoryBox = (element) ->
     while (element && !element.classList.contains('category_box'))
