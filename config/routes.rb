@@ -10,6 +10,6 @@ Rails.application.routes.draw do
 
   match 'speech/' => 'speech#create', :via => :post
 
-  root 'phrase#index'
+  root 'main#index'
 end
 
