@@ -47,13 +47,17 @@ $ ->
       error: ->
         console.log('error')
 
-  update_category = (phrase_id, category_id, on_success) ->
+  update_phrase = (phrase_id, category_id, next_phrase_id) ->
     $.ajax
       url: '/phrase'
       type: 'UPDATE'
-      data: {'type': 'CATEGORY', 'phrase_id': phrase_id, 'category_id': category_id}
+      data: {
+        'type': 'CATEGORY',
+        'phrase_id': phrase_id,
+        'category_id': category_id,
+        'next_phrase_id': next_phrase_id,
+      }
       success: (data, status, response) ->
-        on_success()
       error: ->
         console.log('error')
 
@@ -81,6 +85,15 @@ $ ->
     if input
       save(input)
 
+  drop = (el, target, source, sibling) ->
+    phrase_id = el.getAttribute('phrase_id')
+    category_id = target.getAttribute('category_id')
+    if sibling
+      next_phrase_id = sibling.getAttribute('phrase_id')
+    else
+      next_phrase_id = null
+    update_phrase(phrase_id, category_id, next_phrase_id)
+
   phrase_setup = ->
     $(".phrase_say").click ->
       say(this.getAttribute('text'))
@@ -92,7 +105,9 @@ $ ->
     $(".category_delete").click ->
       delete_category(this.getAttribute('category_id'))
 
-    dragula(document.querySelectorAll('.outer_category_box'))
+    # setting up drag and drop events in categories
+    drake = dragula((el for el in document.querySelectorAll('.category_body')))
+    drake.on('drop', drop)
 
   $("#new_category_button").click ->
     input = $("#new_category_input").val()

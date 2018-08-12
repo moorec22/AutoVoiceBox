@@ -4,7 +4,7 @@
       <h2 class="category_title_name"><%= category.name %></h2>
       <input category_id="<%= category.id %>" class="category_delete" type="submit" value="Delete" />
     </div>
-    <div class="category_body">
+    <div category_id="<%= category.id %>" class="category_body">
       <% category.ordered_phrases.each do |phrase| %>
         <%= render partial: "phrase", locals: { phrase: phrase } %>
       <% end %>
