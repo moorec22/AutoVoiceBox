@@ -68,29 +68,10 @@ $ ->
         console.log('error')
 
 
-  allowDrop = (event) ->
-    event.preventDefault()
-
-  drag = (event) ->
-    event.dataTransfer.setData("phrase", event.target.id)
-
   getParentCategoryBox = (element) ->
     while (element && !element.classList.contains('category_box'))
       element = element.parentNode
     return element
-
-  drop = (event) ->
-    event.preventDefault()
-    id = event.dataTransfer.getData("phrase")
-    phrase = document.getElementById(id)
-    phrase_id = phrase.getAttribute("phrase_id")
-    box = getParentCategoryBox(event.target)
-    category_id = box.getAttribute('category_id')
-    on_success = ->
-      box.appendChild(phrase)
-    if phrase_id
-      update_category(phrase_id, category_id, on_success)
-    else
 
   $('#say').click ->
     say($('#phrase_input').val())
@@ -107,21 +88,11 @@ $ ->
     $(".phrase_delete").click ->
       destroy(this.getAttribute('phrase_id'))
 
-    $(".phrase_box").on('dragstart', ->
-      drag(event)
-    )
-
   category_setup = ->
-    $(".category_box").on('dragover', ->
-      allowDrop(event)
-    )
-
-    $(".category_box").on('drop', ->
-      drop(event)
-    )
-  
     $(".category_delete").click ->
       delete_category(this.getAttribute('category_id'))
+
+    dragula(document.querySelectorAll('.outer_category_box'))
 
   $("#new_category_button").click ->
     input = $("#new_category_input").val()
