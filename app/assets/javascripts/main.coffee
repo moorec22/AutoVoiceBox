@@ -115,7 +115,9 @@ $ ->
       delete_category(this.getAttribute('category_id'))
 
     # setting up drag and drop events in categories
-    drake = dragula((el for el in document.querySelectorAll('.category_body')))
+    categories = (el for el in document.querySelectorAll('.category_body'))
+    categories.push(document.querySelector('#phrase_queue'))
+    drake = dragula(categories)
     drake.on('drop', drop)
 
   $("#new_category_button").click ->
