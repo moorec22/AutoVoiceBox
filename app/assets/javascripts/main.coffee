@@ -1,4 +1,6 @@
 $ ->
+  drake = dragula()
+
   say = (phrase) ->
     $.ajax
       url: '/speech'
@@ -117,7 +119,8 @@ $ ->
     # setting up drag and drop events in categories
     categories = (el for el in document.querySelectorAll('.category_body'))
     categories.push(document.querySelector('#phrase_queue'))
-    drake = dragula(categories)
+    for category in categories
+      drake.containers.push(category)
     drake.on('drop', drop)
 
   $("#new_category_button").click ->
