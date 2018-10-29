@@ -23,7 +23,6 @@ class PhraseController < ApplicationController
       else
         position = Phrase.find(next_phrase_id).position(category) - 1
       end
-      puts "POS POS POS POS POS POSP OPS PSDODF #{position}"
       phrase.phrase_categories.each { |pc| pc.destroy! }
       new_phrase_category = PhraseCategory.new(
         phrase_id: phrase.id,
