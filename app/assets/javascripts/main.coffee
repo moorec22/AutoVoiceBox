@@ -37,6 +37,15 @@ $ ->
       error: ->
         console.log('error')
 
+  update_voice = (voice) ->
+    $.ajax
+      url: '/setting/voice'
+      type: 'POST'
+      data: { 'voice': voice }
+      error: ->
+        console.log('error')
+      
+
   destroy = (phrase_id) ->
     $.ajax
       url: '/phrase'
@@ -113,6 +122,9 @@ $ ->
     input = $("#new_category_input").val()
     if input
       save_category(input)
+
+  $(".voice_selector").change ->
+    update_voice(this.options[this.selectedIndex].value)
 
 
   phrase_setup()

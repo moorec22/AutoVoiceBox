@@ -3,6 +3,15 @@
   <input id="phrase_input" />
   <input id="say" type="submit" value="Say" />
   <input id="save" type="submit" value="Save" />
+  <select class="voice_selector">
+    <% @voices.each do |voice| %>
+      <option value="<%= voice %>"
+      <% if voice == @voice %>
+        selected="selected"
+      <% end %>
+      ><%= voice %></option>
+    <% end %>
+  </select>
   <br />
   <br />
   <div id="phrase_queue">

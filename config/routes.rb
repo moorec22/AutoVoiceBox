@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   match 'category/' => 'category#destroy', :via => :delete
 
   match 'speech/' => 'speech#create', :via => :post
+  match 'setting/voice/' => 'setting#get_voices', :via => :get
+  match 'setting/voice/' => 'setting#update_voice', :via => :post
 
   root 'main#index'
 end

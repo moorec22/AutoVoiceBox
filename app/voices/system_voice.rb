@@ -1,7 +1,7 @@
 class SystemVoice < Voice
   # TODO: Sanitize `phrase` you lazy piece of garbage!
-  def self.say(phrase)
-    system("say -v Oliver $'#{phrase.gsub("'", "\\\\'")}'")
+  def self.say(phrase, voice = 'Oliver')
+    system("say -v #{voice} $'#{phrase.gsub("'", "\\\\'")}'")
   end
 end
 
