@@ -2,6 +2,7 @@ class SettingController < ApplicationController
   VOICES = [
     'Daniel',
     'Oliver',
+    'Peter',
     'Samantha',
     'Victoria',
     'Alex',
