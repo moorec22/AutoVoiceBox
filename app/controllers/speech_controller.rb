@@ -1,5 +1,12 @@
+require 'thread'
+
 class SpeechController < ApplicationController
+  @@lock = Mutex.new
+
   def create
-    SystemVoice::say(params[:phrase], Setting.voice)
+    if @@lock.try_lock
+      SystemVoice::say(params[:phrase], Setting.voice)
+      @@lock.unlock
+    end
   end
 end
