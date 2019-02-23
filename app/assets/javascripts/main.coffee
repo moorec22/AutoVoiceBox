@@ -121,6 +121,8 @@ $ ->
     categories.push(document.querySelector('#phrase_queue'))
     for category in categories
       drake.containers.push(category)
+    drake.containers.push(document.querySelector('#category_column_left'))
+    drake.containers.push(document.querySelector('#category_column_right'))
     drake.on('drop', drop)
 
   $("#new_category_button").click ->
