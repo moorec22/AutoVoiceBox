@@ -1,5 +1,11 @@
 $ ->
-  drake = dragula()
+  drake = dragula({
+    accepts: (el, target, source, sibling) ->
+      return (el.classList.contains('phrase_box') &&
+        target.classList.contains('category_body')) ||
+        (el.classList.contains('outer_category_box') &&
+        target.classList.contains('category_column'));
+  })
 
   say = (phrase) ->
     $.ajax
@@ -97,13 +103,20 @@ $ ->
       save(input)
 
   drop = (el, target, source, sibling) ->
-    phrase_id = el.getAttribute('phrase_id')
-    category_id = target.getAttribute('category_id')
-    if sibling
-      next_phrase_id = sibling.getAttribute('phrase_id')
-    else
-      next_phrase_id = null
-    update_phrase(phrase_id, category_id, next_phrase_id)
+    if (el.classList.contains('phrase_box') &&
+        target.classList.contains('category_body'))
+      phrase_id = el.getAttribute('phrase_id')
+      category_id = target.getAttribute('category_id')
+      if sibling
+        next_phrase_id = sibling.getAttribute('phrase_id')
+      else
+        next_phrase_id = null
+      update_phrase(phrase_id, category_id, next_phrase_id)
+    else if (el.classList.contains('outer_category_box') &&
+        target.classList.contains('category_column'))
+      console.log(el);
+      console.log(sibling);
+      console.log(target);
 
   phrase_setup = ->
     $(".phrase_say").click ->

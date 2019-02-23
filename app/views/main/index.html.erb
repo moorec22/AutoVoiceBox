@@ -27,15 +27,11 @@
 <br />
 
 <div class="row">
-  <div id="category_column_left" class="column">
-    <%= render partial: "category_list", locals: { categories: @categories.to_a.values_at(
-      *((0...@categories.size).to_a.select { |i| i % 2 == 0 })
-    ) } %>
+  <div id="category_column_left" class="column category_column">
+    <%= render partial: "category_list", locals: { categories: @categories.to_a[0...(@categories.size / 2)] } %>
   </div>
-  <div id="category_column_right" class="column">
-    <%= render partial: "category_list", locals: { categories: @categories.to_a.values_at(
-      *((0...@categories.size).to_a.select { |i| i % 2 == 1 })
-    ) } %>
+  <div id="category_column_right" class="column category_column">
+    <%= render partial: "category_list", locals: { categories: @categories.to_a[(@categories.size / 2)...@categories.size] } %>
   </div>
 </div>
 
