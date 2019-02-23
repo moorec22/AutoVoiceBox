@@ -13,6 +13,10 @@ class Category < ApplicationRecord
   def next_pos
     ordered_phrases.size
   end
+
+  def column
+    category_positions.first.try(:column) || 0
+  end
   
   def position
     category_positions.first.try(:position) || Category.all.size
