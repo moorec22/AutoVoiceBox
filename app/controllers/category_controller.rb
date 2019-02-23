@@ -9,5 +9,16 @@ class CategoryController < ApplicationController
     category = Category.find(params[:category_id])
     category.destroy!
   end
+
+  def update
+    category = Category.find(params[:category_id])
+    category.update_column!(params[:column].to_i)
+    if params[:next_cateory_id].nil?
+      category.update_position!(Category.by_column(category.column).size)
+    else
+      next_category = Category.find(params[:next_category_id])
+      category.update_position!(next_category.position - 1)
+    end
+  end
 end
 
