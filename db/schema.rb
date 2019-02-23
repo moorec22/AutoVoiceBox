@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190223214634) do
+ActiveRecord::Schema.define(version: 20190223223044) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20190223214634) do
   create_table "category_positions", force: :cascade do |t|
     t.integer "position"
     t.integer "category_id"
+    t.integer "column"
     t.index ["category_id"], name: "index_category_positions_on_category_id", unique: true
   end
 
