@@ -78,6 +78,19 @@ $ ->
       error: ->
         console.log('error')
 
+  update_category = (category_id, next_category_id, column) ->
+    $.ajax
+      url: '/category'
+      type: 'UPDATE'
+      data: {
+        'type': 'POSITION',
+        'category_id': category_id,
+        'next_category_id': next_category_id,
+        'column': column,
+      }
+      success: (data, status, response) ->
+      error: ->
+
   delete_category = (category_id) ->
     $.ajax
       url: '/category'
@@ -114,9 +127,13 @@ $ ->
       update_phrase(phrase_id, category_id, next_phrase_id)
     else if (el.classList.contains('outer_category_box') &&
         target.classList.contains('category_column'))
-      console.log(el);
-      console.log(sibling);
-      console.log(target);
+      category_id = el.getAttribute('category_id')
+      if sibling
+        next_category_id = sibling.getAttribute('category_id')
+      else
+        next_category_id = null
+      column = target.getAttribute('column')
+      update_category(category_id, next_category_id, column)
 
   phrase_setup = ->
     $(".phrase_say").click ->

@@ -27,10 +27,10 @@
 <br />
 
 <div class="row">
-  <div id="category_column_left" class="column">
+  <div id="category_column_left" class="column category_column" column="0">
     <%= render partial: "category_list", locals: { categories: @categories.to_a.select { |category| category.column == 0 } } %>
   </div>
-  <div id="category_column_right" class="column">
+  <div id="category_column_right" class="column category_column" column="1">
     <%= render partial: "category_list", locals: { categories: @categories.to_a.select { |category| category.column == 1 } } %>
   </div>
 </div>
