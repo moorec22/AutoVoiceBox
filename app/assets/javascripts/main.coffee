@@ -1,20 +1,38 @@
+class Speaker
+  constructor: ->
+    @synth = window.speechSynthesis
+    @current_voice_name = @.default_voice_name()
+
+  voices: ->
+    @synth.getVoices()
+
+  enabled_voices: ->
+    set_voices = ['Daniel', 'Oliver', 'Peter', 'Samantha', 'Victoria', 'Alex', 'Fred']
+    voice for voice in @.voices() when set_voices.includes(voice.name)
+
+  default_voice_name: ->
+    'Oliver'
+
+  current_voice: ->
+    (voice for voice in @.enabled_voices() when voice.name == @.current_voice_name)[0]
+
+  say: (phrase) ->
+    utterance = new SpeechSynthesisUtterance(phrase)
+    utterance.voice = @.current_voice()
+    @synth.speak(utterance)
+
 $ ->
   drake = dragula({
     accepts: (el, target, source, sibling) ->
       return (el.classList.contains('phrase_box') &&
         target.classList.contains('category_body')) ||
         (el.classList.contains('outer_category_box') &&
-        target.classList.contains('category_column'));
+        target.classList.contains('category_column'))
   })
+  speaker = new Speaker
 
   say = (phrase) ->
-    $.ajax
-      url: '/speech'
-      type: 'POST'
-      data : {'phrase': phrase}
-      success: (data, status, response) ->
-      error: ->
-        console.log('error')
+    speaker.say(phrase)
 
   save = (phrase) ->
     $.ajax
