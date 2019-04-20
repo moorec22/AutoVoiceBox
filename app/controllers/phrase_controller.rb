@@ -21,7 +21,7 @@ class PhraseController < ApplicationController
       if next_phrase_id.blank?
         position = category.next_pos
       else
-        position = Phrase.find(next_phrase_id).position(category) - 1
+        position = Phrase.find(next_phrase_id).position(category)
       end
       phrase.phrase_categories.each { |pc| pc.destroy! }
       new_phrase_category = PhraseCategory.new(
@@ -29,6 +29,9 @@ class PhraseController < ApplicationController
         category_id: category.id,
         position: position
       )
+      category.phrase_categories.where('position >= ?', position).each do |pc|
+        pc.update!(position: pc.position + 1)
+      end
       category.phrase_categories << new_phrase_category 
     end
   end
