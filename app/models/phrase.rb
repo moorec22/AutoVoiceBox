@@ -9,7 +9,7 @@ class Phrase < ApplicationRecord
   def position(category)
     # TODO: Create uniqueness constraint on (phrase_id, category_id) in
     # phrase_categories
-    phrase_categories.where(category_id: category.id).first.position
+    phrase_categories.where(category_id: category.id).first.try(:position) || 0
   end
 
   def say
