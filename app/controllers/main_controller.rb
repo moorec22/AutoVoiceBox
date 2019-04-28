@@ -1,5 +1,5 @@
 class MainController < ApplicationController
-  http_basic_authenticate_with name: "forrest", password: "ottobotsassemble"
+  http_basic_authenticate_with name: "forrest", password: Setting.password
 
   def index
     @categories = Category.all_ordered_by_position
