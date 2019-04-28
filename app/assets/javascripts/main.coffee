@@ -16,6 +16,9 @@ class Speaker
   current_voice: ->
     (voice for voice in @.enabled_voices() when voice.name == @.current_voice_name)[0]
 
+  set_voice_name: (voice_name) ->
+    @current_voice_name = voice_name
+
   say: (phrase) ->
     utterance = new SpeechSynthesisUtterance(phrase)
     utterance.voice = @.current_voice()
@@ -64,13 +67,7 @@ $ ->
         console.log('error')
 
   update_voice = (voice) ->
-    $.ajax
-      url: '/setting/voice'
-      type: 'POST'
-      data: { 'voice': voice }
-      error: ->
-        console.log('error')
-      
+    speaker.set_voice_name(voice)
 
   destroy = (phrase_id) ->
     $.ajax
