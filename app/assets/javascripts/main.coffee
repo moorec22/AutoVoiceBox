@@ -1,3 +1,18 @@
+class Lock
+  constructor: ->
+    @locked = false
+
+  lock: ->
+    if @locked
+      return false
+    @locked = true
+    return true
+  
+  unlock: ->
+    @locked = false
+
+window.speechLock = new Lock
+
 class Speaker
   constructor: ->
     @synth = window.speechSynthesis
@@ -20,9 +35,11 @@ class Speaker
     @current_voice_name = voice_name
 
   say: (phrase) ->
-    utterance = new SpeechSynthesisUtterance(phrase)
-    utterance.voice = @.current_voice()
-    @synth.speak(utterance)
+    if window.speechLock.lock()
+      utterance = new SpeechSynthesisUtterance(phrase)
+      utterance.voice = @.current_voice()
+      utterance.onend = window.speechLock.unlock
+      @synth.speak(utterance)
 
 $ ->
   drake = dragula({
