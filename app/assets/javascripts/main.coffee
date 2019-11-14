@@ -34,7 +34,6 @@ $ ->
       type: 'POST'
       data : {'category': category_id}
       success: (data, status, response) ->
-        console.log($('#category_container'))
         $('#category_container').html(response.responseText)
       error: ->
         console.log('error')
@@ -45,12 +44,13 @@ $ ->
       type: 'POST'
       data : {'name': category_name}
       success: (data, status, response) ->
-        left = $("#category_column_left")
-        right = $("#category_column_right")
-        if (left.children().size() <= right.children().size())
-          left.append(response.responseText)
-        else
-          right.append(response.responseText)
+        category = JSON.parse(response.responseText)
+        link = $('<a>',{
+          text: category['name'],
+          category_id: category['id'],
+          click: -> update_category_link(category['id'])
+        })
+        $('#category_list').append(link)
         category_setup()
         $("#new_category_input").val("")
       error: ->
