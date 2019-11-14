@@ -1,42 +1,45 @@
 
-<div id="phrase_form" align="center">
-  <input id="phrase_input" />
-  <input id="say" type="submit" value="Say" />
-  <input id="save" type="submit" value="Save" />
-  <select class="voice_selector">
-    <% @voices.each do |voice| %>
-      <option value="<%= voice %>"
-      <% if voice == @voice %>
-        selected="selected"
+<div id="category_sidebar" class="sidebar">
+  <% @categories.each do |category| %>
+    <a class="category_link" category_id="<%= category.id %>"><%= category.name %></a>
+  <% end %>
+</div>
+
+<div class="main">
+  <div id="phrase_form" align="center">
+    <input id="phrase_input" />
+    <input id="say" type="submit" value="Say" />
+    <input id="save" type="submit" value="Save" />
+    <select class="voice_selector">
+      <% @voices.each do |voice| %>
+        <option value="<%= voice %>"
+        <% if voice == @voice %>
+          selected="selected"
+        <% end %>
+        ><%= voice %></option>
       <% end %>
-      ><%= voice %></option>
-    <% end %>
-  </select>
+    </select>
+    <br />
+    <br />
+    <div id="phrase_queue">
+      <% @phrases_without_category.each do |phrase| %>
+        <%= render partial: "phrase", locals: { phrase: phrase } %>
+        <br />
+      <% end %>
+    </div>
+  </div>
+  
   <br />
   <br />
-  <div id="phrase_queue">
-    <% @phrases_without_category.each do |phrase| %>
-      <%= render partial: "phrase", locals: { phrase: phrase } %>
-      <br />
-    <% end %>
-  </div>
-</div>
+  <br />
 
-<br />
-<br />
-<br />
-
-<div class="row">
-  <div id="category_column_left" class="column category_column" column="0">
-    <%= render partial: "category_list", locals: { categories: @categories.to_a.select { |category| category.column == 0 } } %>
+  <div id="category_container">
+    <%= render partial: "category", locals: {category: @current_category} %>
   </div>
-  <div id="category_column_right" class="column category_column" column="1">
-    <%= render partial: "category_list", locals: { categories: @categories.to_a.select { |category| category.column == 1 } } %>
+  
+  <br />
+  <div align="center">
+    <input id="new_category_input" />
+    <input id="new_category_button" type="submit" value="New Category" />
   </div>
-</div>
-
-<br />
-<div align="center">
-  <input id="new_category_input" />
-  <input id="new_category_button" type="submit" value="New Category" />
 </div>

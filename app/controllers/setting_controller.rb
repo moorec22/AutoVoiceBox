@@ -21,5 +21,20 @@ class SettingController < ApplicationController
     voice = params[:voice]
     Setting.find_or_create_by(name: 'voice').update(value: voice)
   end
+  
+  def get_current_category
+    setting = Setting.where(name: 'current_category').first
+    if !setting
+      setting = Setting.create!(name: 'current_category', value: Category.first.id)
+    end
+    setting.value.to_i
+  end
+
+  def update_current_category
+    category = params[:category]
+    setting = Setting.find_or_create_by(name: 'current_category')
+    setting.update(value: category)
+    render partial: "main/category", locals: { category: Category.find(setting.value) }
+  end
 end
 

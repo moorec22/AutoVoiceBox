@@ -28,6 +28,17 @@ $ ->
       error: ->
         console.log('error')
 
+  update_category_link = (category_id) ->
+    $.ajax
+      url: '/setting/current_category'
+      type: 'POST'
+      data : {'category': category_id}
+      success: (data, status, response) ->
+        console.log($('#category_container'))
+        $('#category_container').html(response.responseText)
+      error: ->
+        console.log('error')
+
   save_category = (category_name) ->
     $.ajax
       url: '/category'
@@ -163,6 +174,8 @@ $ ->
   $(".voice_selector").change ->
     update_voice(this.options[this.selectedIndex].value)
 
+  $(".category_link").click ->
+    update_category_link(this.getAttribute('category_id'))
 
   phrase_setup()
   category_setup()
