@@ -8,6 +8,7 @@ class CategoryController < ApplicationController
   def destroy
     category = Category.find(params[:category_id])
     category.destroy!
+    render partial: "main/category_list", locals: { categories: Category.all }
   end
 
   def update

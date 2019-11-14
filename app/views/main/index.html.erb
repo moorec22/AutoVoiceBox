@@ -1,9 +1,7 @@
 
 <div id="category_sidebar" class="sidebar">
   <div id="category_list">
-    <% @categories.each do |category| %>
-      <a class="category_link" category_id="<%= category.id %>"><%= category.name %></a>
-    <% end %>
+    <%= render partial: "category_list", locals: { categories: @categories } %>
   </div>
 
   <br />

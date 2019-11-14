@@ -22,12 +22,20 @@ class SettingController < ApplicationController
     Setting.find_or_create_by(name: 'voice').update(value: voice)
   end
   
-  def get_current_category
+  def get_current_category_id
     setting = Setting.where(name: 'current_category').first
     if !setting || !Category.where(id: setting.value).first
       setting = Setting.create!(name: 'current_category', value: Category.first.id)
     end
     setting.value.to_i
+  end
+  
+  def get_current_category
+    setting = Setting.where(name: 'current_category').first
+    if !setting || !Category.where(id: setting.value).first
+      setting = Setting.create!(name: 'current_category', value: Category.first.id)
+    end
+    render partial: "main/category", locals: { category: Category.find(setting.value) }
   end
 
   def update_current_category

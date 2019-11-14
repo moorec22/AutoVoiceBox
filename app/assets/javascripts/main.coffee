@@ -35,6 +35,8 @@ $ ->
       data : {'category': category_id}
       success: (data, status, response) ->
         $('#category_container').html(response.responseText)
+        $(".category_delete").click ->
+          delete_category(this.getAttribute('category_id'))
       error: ->
         console.log('error')
 
@@ -108,7 +110,15 @@ $ ->
       type: 'DELETE'
       data: {category_id: category_id}
       success: (data, status, response) ->
-        $("[category_id='" + category_id + "']").remove()
+        $.ajax
+          url: '/setting/current_category'
+          type: 'GET'
+          data : {'category': category_id}
+          success: (data, status, response) ->
+            $('#category_container').html(response.responseText)
+        $('#category_list').html(response.responseText)
+        # TODO: get all category clicks working
+        $('.category_link').click = -> update_category_link(category['id'])
       error: ->
         console.log('error')
 
