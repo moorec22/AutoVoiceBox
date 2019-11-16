@@ -1,4 +1,6 @@
 $ ->
+  # DRAG AND DROP SETUP
+
   drake = dragula({
     accepts: (el, target, source, sibling) ->
       return (el.classList.contains('phrase_box') &&
@@ -7,28 +9,30 @@ $ ->
         target.classList.contains('category_column'));
   })
 
-  say = (phrase) ->
-    $.ajax
-      url: '/speech'
-      type: 'POST'
-      data : {'phrase': phrase}
-      success: (data, status, response) ->
-      error: ->
-        console.log('error')
+  drop = (el, target, source, sibling) ->
+    if (el.classList.contains('phrase_box') &&
+        target.classList.contains('category_body'))
+      phrase_id = el.getAttribute('phrase_id')
+      category_id = target.getAttribute('category_id')
+      if sibling
+        next_phrase_id = sibling.getAttribute('phrase_id')
+      else
+        next_phrase_id = null
+      update_phrase(phrase_id, category_id, next_phrase_id)
+    else if (el.classList.contains('outer_category_box') &&
+        target.classList.contains('category_column'))
+      category_id = el.getAttribute('category_id')
+      if sibling
+        next_category_id = sibling.getAttribute('category_id')
+      else
+        next_category_id = null
+      column = target.getAttribute('column')
+      update_category(category_id, next_category_id, column)
 
-  save = (phrase) ->
-    $.ajax
-      url: '/phrase'
-      type: 'POST'
-      data : {'phrase': phrase}
-      success: (data, status, response) ->
-        $('#phrase_queue').append(response.responseText)
-        $('#phrase_input').val("")
-        phrase_setup()
-      error: ->
-        console.log('error')
+  # CATEGORY ACTIONS
 
   update_category_link = (category_id) ->
+    console.log('here')
     $.ajax
       url: '/setting/current_category'
       type: 'POST'
@@ -55,39 +59,6 @@ $ ->
         $('#category_list').append(link)
         category_setup()
         $("#new_category_input").val("")
-      error: ->
-        console.log('error')
-
-  update_voice = (voice) ->
-    $.ajax
-      url: '/setting/voice'
-      type: 'POST'
-      data: { 'voice': voice }
-      error: ->
-        console.log('error')
-      
-
-  destroy = (phrase_id) ->
-    $.ajax
-      url: '/phrase'
-      type: 'DELETE'
-      data: {'phrase_id': phrase_id}
-      success: (data, status,response) ->
-        $("[phrase_id='" + phrase_id + "']").remove()
-      error: ->
-        console.log('error')
-
-  update_phrase = (phrase_id, category_id, next_phrase_id) ->
-    $.ajax
-      url: '/phrase'
-      type: 'UPDATE'
-      data: {
-        'type': 'CATEGORY',
-        'phrase_id': phrase_id,
-        'category_id': category_id,
-        'next_phrase_id': next_phrase_id,
-      }
-      success: (data, status, response) ->
       error: ->
         console.log('error')
 
@@ -118,50 +89,12 @@ $ ->
             $('#category_container').html(response.responseText)
         $('#category_list').html(response.responseText)
         # TODO: get all category clicks working
-        $('.category_link').click = -> update_category_link(category['id'])
+        console.log($('.category_link'))
+        $('.category_link').click(
+          -> update_category_link(this.getAttribute('category_id'))
+        )
       error: ->
         console.log('error')
-
-
-  getParentCategoryBox = (element) ->
-    while (element && !element.classList.contains('category_box'))
-      element = element.parentNode
-    return element
-
-  $('#say').click ->
-    say($('#phrase_input').val())
-
-  $('#save').click ->
-    input = $('#phrase_input').val()
-    if input
-      save(input)
-
-  drop = (el, target, source, sibling) ->
-    if (el.classList.contains('phrase_box') &&
-        target.classList.contains('category_body'))
-      phrase_id = el.getAttribute('phrase_id')
-      category_id = target.getAttribute('category_id')
-      if sibling
-        next_phrase_id = sibling.getAttribute('phrase_id')
-      else
-        next_phrase_id = null
-      update_phrase(phrase_id, category_id, next_phrase_id)
-    else if (el.classList.contains('outer_category_box') &&
-        target.classList.contains('category_column'))
-      category_id = el.getAttribute('category_id')
-      if sibling
-        next_category_id = sibling.getAttribute('category_id')
-      else
-        next_category_id = null
-      column = target.getAttribute('column')
-      update_category(category_id, next_category_id, column)
-
-  phrase_setup = ->
-    $(".phrase_say").click ->
-      say(this.getAttribute('text'))
-
-    $(".phrase_delete").click ->
-      destroy(this.getAttribute('phrase_id'))
 
   category_setup = ->
     $(".category_delete").click ->
@@ -176,6 +109,79 @@ $ ->
     drake.containers.push(document.querySelector('#category_column_right'))
     drake.on('drop', drop)
 
+  # PHRASE ACTIONS
+
+  save = (phrase) ->
+    $.ajax
+      url: '/phrase'
+      type: 'POST'
+      data : {'phrase': phrase}
+      success: (data, status, response) ->
+        $('#phrase_queue').append(response.responseText)
+        $('#phrase_input').val("")
+        phrase_setup()
+      error: ->
+        console.log('error')
+
+  destroy = (phrase_id) ->
+    $.ajax
+      url: '/phrase'
+      type: 'DELETE'
+      data: {'phrase_id': phrase_id}
+      success: (data, status,response) ->
+        $("[phrase_id='" + phrase_id + "']").remove()
+      error: ->
+        console.log('error')
+
+  update_phrase = (phrase_id, category_id, next_phrase_id) ->
+    $.ajax
+      url: '/phrase'
+      type: 'UPDATE'
+      data: {
+        'type': 'CATEGORY',
+        'phrase_id': phrase_id,
+        'category_id': category_id,
+        'next_phrase_id': next_phrase_id,
+      }
+      success: (data, status, response) ->
+      error: ->
+        console.log('error')
+
+  # SPEECH ACTIONS
+
+  say = (phrase) ->
+    $.ajax
+      url: '/speech'
+      type: 'POST'
+      data : {'phrase': phrase}
+      success: (data, status, response) ->
+      error: ->
+        console.log('error')
+
+  update_voice = (voice) ->
+    $.ajax
+      url: '/setting/voice'
+      type: 'POST'
+      data: { 'voice': voice }
+      error: ->
+        console.log('error')
+      
+
+  $('#say').click ->
+    say($('#phrase_input').val())
+
+  $('#save').click ->
+    input = $('#phrase_input').val()
+    if input
+      save(input)
+
+  phrase_setup = ->
+    $(".phrase_say").click ->
+      say(this.getAttribute('text'))
+
+    $(".phrase_delete").click ->
+      destroy(this.getAttribute('phrase_id'))
+
   $("#new_category_button").click ->
     input = $("#new_category_input").val()
     if input
@@ -187,6 +193,7 @@ $ ->
   $(".category_link").click ->
     update_category_link(this.getAttribute('category_id'))
 
+  # INITIAL SETUP OF PHRASES AND CATEGORIES
   phrase_setup()
   category_setup()
 
