@@ -1,3 +1,3 @@
 <% categories.each do |category| %>
-  <a class="category_link" category_id="<%= category.id %>"><%= category.name %></a>
+  <%= render partial: "main/category_link", locals: { category: category } %>
 <% end %>
