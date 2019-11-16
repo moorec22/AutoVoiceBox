@@ -129,7 +129,7 @@ $ ->
       type: 'DELETE'
       data: {'phrase_id': phrase_id}
       success: (data, status,response) ->
-        $("[phrase_id='" + phrase_id + "']").remove()
+        $("#phrase_box_" + phrase_id).remove()
       error: ->
         console.log('error')
 
@@ -178,8 +178,7 @@ $ ->
   phrase_setup = ->
     $(".phrase_say").click(-> say(this.getAttribute('text')))
 
-    $(".phrase_delete").click ->
-      destroy(this.getAttribute('phrase_id'))
+    $(".phrase_delete").click(-> destroy(this.getAttribute('phrase_id')))
 
   full_setup = ->
     phrase_setup()
