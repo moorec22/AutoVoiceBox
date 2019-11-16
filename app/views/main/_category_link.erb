@@ -1,1 +1,6 @@
-<a class="category_link" category_id="<%= category.id %>"><%= category.name %></a>
+<a 
+  class="category_link <%= category.id %> <%= "selected" if category.id == current_category_id %>"
+  category_id="<%= category.id %>"
+  >
+  <%= category.name %>
+</a>

@@ -38,7 +38,9 @@ $ ->
       type: 'POST'
       data : {'category': category_id}
       success: (data, status, response) ->
-        $('#category_container').html(response.responseText)
+        $(".category_link").removeClass('selected')
+        $(".category_link." + category_id).addClass('selected')
+        $("#category_container").html(response.responseText)
         $(".category_delete").click ->
           delete_category(this.getAttribute('category_id'))
       error: ->
