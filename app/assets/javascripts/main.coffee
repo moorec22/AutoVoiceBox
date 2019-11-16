@@ -53,6 +53,7 @@ $ ->
         category = JSON.parse(response.responseText)
         link = $('<a>',{
           text: category['name'],
+          class: "category_link " + category['id']
           category_id: category['id'],
           click: -> update_category_link(category['id'])
         })
