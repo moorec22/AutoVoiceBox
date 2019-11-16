@@ -32,7 +32,6 @@ $ ->
   # CATEGORY ACTIONS
 
   update_category_link = (category_id) ->
-    console.log('here')
     $.ajax
       url: '/setting/current_category'
       type: 'POST'
@@ -41,8 +40,7 @@ $ ->
         $(".category_link").removeClass('selected')
         $(".category_link." + category_id).addClass('selected')
         $("#category_container").html(response.responseText)
-        $(".category_delete").click ->
-          delete_category(this.getAttribute('category_id'))
+        full_setup()
       error: ->
         console.log('error')
 
@@ -178,11 +176,14 @@ $ ->
       save(input)
 
   phrase_setup = ->
-    $(".phrase_say").click ->
-      say(this.getAttribute('text'))
+    $(".phrase_say").click(-> say(this.getAttribute('text')))
 
     $(".phrase_delete").click ->
       destroy(this.getAttribute('phrase_id'))
+
+  full_setup = ->
+    phrase_setup()
+    category_setup()
 
   $("#new_category_button").click ->
     input = $("#new_category_input").val()
@@ -196,6 +197,5 @@ $ ->
     update_category_link(this.getAttribute('category_id'))
 
   # INITIAL SETUP OF PHRASES AND CATEGORIES
-  phrase_setup()
-  category_setup()
+  full_setup()
 
