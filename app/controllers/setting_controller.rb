@@ -25,7 +25,7 @@ class SettingController < ApplicationController
   def get_current_category_id
     setting = Setting.where(name: 'current_category').first
     if !setting || !Category.where(id: setting.value).first
-      setting = Setting.create!(name: 'current_category', value: Category.first.id)
+      setting = Setting.create!(name: 'current_category', value: (Category.first.try(:id) || 0))
     end
     setting.value.to_i
   end

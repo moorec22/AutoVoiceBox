@@ -1,10 +1,12 @@
 
 <div id="category_sidebar" class="sidebar">
   <div id="category_list">
-    <%= render partial: "category_list", locals: {
-      categories: @categories,
-      current_category_id: @current_category.id,
-    } %>
+    <% if !@categories.empty? %>
+      <%= render partial: "category_list", locals: {
+        categories: @categories,
+        current_category_id: @current_category.id,
+      } %>
+    <% end %>
   </div>
 
   <br />
@@ -43,9 +45,11 @@
   <br />
   <br />
 
-  <div id="category_container">
-    <%= render partial: "category", locals: {category: @current_category} %>
-  </div>
+  <% if !@current_category.nil? %>
+    <div id="category_container">
+      <%= render partial: "category", locals: {category: @current_category} %>
+    </div>
+  <% end %>
   
   <br />
 </div>
