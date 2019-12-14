@@ -47,7 +47,7 @@
 
   <% if !@current_category.nil? %>
     <div id="category_container">
-      <%= render partial: "category", locals: {category: @current_category} %>
+      <%= render partial: "category/base", locals: {category: @current_category} %>
     </div>
   <% end %>
   
