@@ -35,14 +35,14 @@ class SettingController < ApplicationController
     if !setting || !Category.where(id: setting.value).first
       setting = Setting.create!(name: 'current_category', value: Category.first.id)
     end
-    render partial: "main/category", locals: { category: Category.find(setting.value) }
+    render partial: "category/base", locals: { category: Category.find(setting.value) }
   end
 
   def update_current_category
     category = params[:category]
     setting = Setting.find_or_create_by(name: 'current_category')
     setting.update(value: category)
-    render partial: "main/category", locals: { category: Category.find(setting.value) }
+    render partial: "category/base", locals: { category: Category.find(setting.value) }
   end
 end
 

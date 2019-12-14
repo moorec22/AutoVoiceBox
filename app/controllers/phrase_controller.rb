@@ -2,7 +2,7 @@ class PhraseController < ApplicationController
   def create
     category_id = params[:category_id]
     phrase = Phrase.create!(text: params[:phrase])
-    render partial: 'phrase', locals: { phrase: phrase }
+    render partial: 'base', locals: { phrase: phrase }
   end
 
   def destroy
