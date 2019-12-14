@@ -6,7 +6,7 @@
     </div>
     <div category_id="<%= category.id %>" class="category_body">
       <% category.ordered_phrases.each do |phrase| %>
-        <%= render partial: "main/phrase", locals: { phrase: phrase } %>
+        <%= render partial: "phrase/base", locals: { phrase: phrase } %>
       <% end %>
     </div>
   </div>
