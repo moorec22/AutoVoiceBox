@@ -2,7 +2,7 @@
 <div id="category_sidebar" class="sidebar">
   <div id="category_list">
     <% if !@categories.empty? %>
-      <%= render partial: "category_list", locals: {
+      <%= render partial: "category/list", locals: {
         categories: @categories,
         current_category_id: @current_category.id,
       } %>
