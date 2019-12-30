@@ -212,6 +212,19 @@ $ ->
     $("#fixed_category_dropdown_content").removeClass('show')
   )
 
+  single_listener($('#fixed_category_input'), 'keyup', (event) ->
+    console.log(event)
+    input = event.target;
+    filter = input.value.toLowerCase();
+    div = $('#fixed_category_dropdown_content')
+    for link in div.children().filter('a')
+      name = link.textContent.toLowerCase()
+      if name.indexOf(filter) > -1
+        link.style.display = ""
+      else
+        link.style.display = "none"
+  )
+
   $("#new_category_button").click ->
     input = $("#new_category_input").val()
     if input
