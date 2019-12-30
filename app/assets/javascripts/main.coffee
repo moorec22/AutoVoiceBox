@@ -92,9 +92,9 @@ $ ->
           data : {'category': category_id}
           success: (data, status, response) ->
             $('#category_container').html(response.responseText)
+            full_setup()
         $('#category_list').html(response.responseText)
         # TODO: get all category clicks working
-        console.log($('.category_link'))
         single_listener($('.category_link'), 'click', ->
           update_category_link(this.getAttribute('category_id'))
         )
@@ -184,6 +184,7 @@ $ ->
   )
 
   phrase_setup = ->
+    console.log($('.phrase_say'))
     single_listener($('.phrase_say'), 'click', -> say(this.getAttribute('text')))
     single_listener($('.phrase_delete'), 'click', -> destroy(this.getAttribute('phrase_id')))
 
