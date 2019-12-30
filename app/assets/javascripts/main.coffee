@@ -95,15 +95,16 @@ $ ->
         $('#category_list').html(response.responseText)
         # TODO: get all category clicks working
         console.log($('.category_link'))
-        $('.category_link').click(
-          -> update_category_link(this.getAttribute('category_id'))
+        single_listener($('.category_link'), 'click', ->
+          update_category_link(this.getAttribute('category_id'))
         )
       error: ->
         console.log('error')
 
   category_setup = ->
-    $(".category_delete").click ->
+    single_listener($(".category_delete"), 'click', ->
       delete_category(this.getAttribute('category_id'))
+    )
 
     # setting up drag and drop events in categories
     categories = (el for el in document.querySelectorAll('.category_body'))
@@ -172,13 +173,15 @@ $ ->
         console.log('error')
       
 
-  $('#say').click ->
+  single_listener($('#say'), 'click', ->
     say($('#phrase_input').val())
+  )
 
-  $('#save').click ->
+  single_listener($('#save'), 'click', ->
     input = $('#phrase_input').val()
     if input
       save(input)
+  )
 
   phrase_setup = ->
     single_listener($('.phrase_say'), 'click', -> say(this.getAttribute('text')))
@@ -187,6 +190,13 @@ $ ->
   full_setup = ->
     phrase_setup()
     category_setup()
+
+  # ENTER KEYS
+  $('#phrase_input').keypress (event) ->
+    input = event.target.value
+    keycode = if event.keyCode then event.keyCode else event.which
+    if keycode == 13 and input
+      say(input)
 
   $("#new_category_input").keypress (event) ->
     input = $("#new_category_input").val()
