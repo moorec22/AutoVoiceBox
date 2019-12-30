@@ -54,18 +54,20 @@
 
     <div id="fixed_category_container" class="column left-border">
       <div id="fixed_category_search">
-        <input id="fixed_category_input" placeholder="search category" />
+        <input id="fixed_category_input" placeholder="quick access..." />
         <div id="fixed_category_dropdown_content" class="dropdown-content">
           <% @categories.each do |category| %>
-            <a href="#<%= category.id %>"><%= category.name %></a>
+            <span class="fixed_category_link" category_id="<%= category.id %>"><%= category.name %></span>
           <% end %>
         </div>
       </div>
 
       <br />
-      <% if !@current_category.nil? %>
-        <%= render partial: "category/base", locals: {category: @fixed_category} %>
-      <% end %>
+      <div id="fixed_category_inner_container">
+        <% if !@current_category.nil? %>
+          <%= render partial: "category/base", locals: {category: @fixed_category} %>
+        <% end %>
+      <div>
     </div>
   </div>
   

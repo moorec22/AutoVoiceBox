@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   match 'setting/voice/' => 'setting#update_voice', :via => :post
   match 'setting/current_category/' => 'setting#get_current_category', :via => :get
   match 'setting/current_category/' => 'setting#update_current_category', :via => :post
+  match 'setting/fixed_category/' => 'setting#update_fixed_category', :via => :post
 
   root 'main#index'
 end

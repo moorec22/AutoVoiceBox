@@ -100,6 +100,16 @@ $ ->
       error: ->
         console.log('error')
 
+  update_fixed_category = (category_id) ->
+    $.ajax
+      url: '/setting/fixed_category'
+      type: 'POST'
+      data : {'category': category_id}
+      success: (data, status, response) ->
+        $("#fixed_category_inner_container").html(response.responseText)
+      error: ->
+        console.log('error')
+
   category_setup = ->
     single_listener($(".category_delete"), 'click', ->
       delete_category(this.getAttribute('category_id'))
@@ -213,8 +223,8 @@ $ ->
   )
 
   single_listener($('#fixed_category_input'), 'keyup', (event) ->
-    input = event.target;
-    filter = input.value.toLowerCase();
+    input = event.target
+    filter = input.value.toLowerCase()
     div = $('#fixed_category_dropdown_content')
     for link in div.children().filter('a')
       name = link.textContent.toLowerCase()
@@ -222,6 +232,12 @@ $ ->
         link.style.display = ""
       else
         link.style.display = "none"
+  )
+
+  single_listener($(".fixed_category_link"), 'mousedown', ->
+    console.log('here')
+    category_id = event.target.getAttribute('category_id')
+    update_fixed_category(category_id)
   )
 
   $("#new_category_button").click ->
@@ -232,8 +248,9 @@ $ ->
   $(".voice_selector").change ->
     update_voice(this.options[this.selectedIndex].value)
 
-  $(".category_link").click ->
+  single_listener($(".category_link"), 'click', ->
     update_category_link(this.getAttribute('category_id'))
+  )
 
   # INITIAL SETUP OF PHRASES AND CATEGORIES
   full_setup()

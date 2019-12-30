@@ -52,5 +52,12 @@ class SettingController < ApplicationController
     end
     setting.value.to_i
   end
+
+  def update_fixed_category
+    category = params[:category]
+    setting = Setting.find_or_create_by(name: 'fixed_category')
+    setting.update(value: category)
+    render partial: "category/base", locals: { category: Category.find(setting.value) }
+  end
 end
 
