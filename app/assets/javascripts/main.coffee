@@ -100,6 +100,27 @@ $ ->
       error: ->
         console.log('error')
 
+  delete_fixed_category = (category_id) ->
+    $.ajax
+      url: '/category'
+      type: 'DELETE'
+      data: {category_id: category_id}
+      success: (data, status, response) ->
+        $.ajax
+          url: '/setting/current_category'
+          type: 'GET'
+          data : {'category': category_id}
+          success: (data, status, response) ->
+            $('#fixed_category_inner_container').html(response.responseText)
+            full_setup()
+        $('#category_list').html(response.responseText)
+        single_listener($('.category_link'), 'click', ->
+          update_category_link(this.getAttribute('category_id'))
+        )
+      error: ->
+        console.log('error')
+
+
   update_fixed_category = (category_id) ->
     $.ajax
       url: '/setting/fixed_category'
@@ -107,12 +128,18 @@ $ ->
       data : {'category': category_id}
       success: (data, status, response) ->
         $("#fixed_category_inner_container").html(response.responseText)
+        full_setup()
       error: ->
         console.log('error')
 
   category_setup = ->
     single_listener($(".category_delete"), 'click', ->
       delete_category(this.getAttribute('category_id'))
+    )
+    # override fixed category delete
+    console.log($("#fixed_category_inner_container"))
+    single_listener($("#fixed_category_inner_container .category_delete"), 'click', ->
+      delete_fixed_category(this.getAttribute('category_id'))
     )
 
     # setting up drag and drop events in categories
@@ -235,7 +262,6 @@ $ ->
   )
 
   single_listener($(".fixed_category_link"), 'mousedown', ->
-    console.log('here')
     category_id = event.target.getAttribute('category_id')
     update_fixed_category(category_id)
   )
