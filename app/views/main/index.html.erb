@@ -53,13 +53,13 @@
     </div>
 
     <div id="fixed_category_container" class="column">
-      <div id="fixed_category_search" >
+      <div id="fixed_category_search">
         <input id="fixed_category_input" />
       </div>
 
       <br />
       <% if !@current_category.nil? %>
-        <%= render partial: "category/base", locals: {category: @current_category} %>
+        <%= render partial: "category/base", locals: {category: @fixed_category} %>
       <% end %>
     </div>
   </div>
