@@ -54,15 +54,11 @@
 
     <div id="fixed_category_container" class="column">
       <div id="fixed_category_search">
-        <input id="fixed_category_input" />
+        <input id="fixed_category_input" placeholder="search category" />
         <div id="fixed_category_dropdown_content" class="dropdown-content">
-          <a href="#about">About</a>
-          <a href="#base">Base</a>
-          <a href="#blog">Blog</a>
-          <a href="#contact">Contact</a>
-          <a href="#custom">Custom</a>
-          <a href="#support">Support</a>
-          <a href="#tools">Tools</a>
+          <% @categories.each do |category| %>
+            <a href="#<%= category.id %>"><%= category.name %></a>
+          <% end %>
         </div>
       </div>
 
