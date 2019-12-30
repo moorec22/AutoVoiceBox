@@ -21,5 +21,9 @@ class CategoryController < ApplicationController
       category.update_position!(next_category.position - 1)
     end
   end
+
+  def dropdown
+     render partial: "category/dropdown", locals: { categories: Category.all }
+  end
 end
 

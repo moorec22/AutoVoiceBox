@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   match 'category/' => 'category#create', :via => :post
   match 'category/' => 'category#destroy', :via => :delete
   match 'category/' => 'category#update', :via => :update
+  match 'category/dropdown' => 'category#dropdown', :via => :get
 
   match 'speech/' => 'speech#create', :via => :post
   match 'setting/voice/' => 'setting#get_voices', :via => :get
