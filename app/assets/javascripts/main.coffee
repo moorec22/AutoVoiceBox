@@ -183,7 +183,6 @@ $ ->
   )
 
   phrase_setup = ->
-    console.log($('.phrase_say'))
     single_listener($('.phrase_say'), 'click', -> say(this.getAttribute('text')))
     single_listener($('.phrase_delete'), 'click', -> destroy(this.getAttribute('phrase_id')))
 
@@ -203,6 +202,15 @@ $ ->
     keycode = if event.keyCode then event.keyCode else event.which
     if keycode == 13 and input
       save_category(input)
+
+  # FIXED CATEGORY SETUP
+  single_listener($('#fixed_category_input'), 'focus', ->
+    $("#fixed_category_dropdown_content").addClass('show')
+  )
+
+  single_listener($('#fixed_category_input'), 'focusout', ->
+    $("#fixed_category_dropdown_content").removeClass('show')
+  )
 
   $("#new_category_button").click ->
     input = $("#new_category_input").val()
