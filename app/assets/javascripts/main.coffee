@@ -213,7 +213,6 @@ $ ->
   )
 
   single_listener($('#fixed_category_input'), 'keyup', (event) ->
-    console.log(event)
     input = event.target;
     filter = input.value.toLowerCase();
     div = $('#fixed_category_dropdown_content')
