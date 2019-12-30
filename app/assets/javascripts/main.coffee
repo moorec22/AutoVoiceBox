@@ -64,6 +64,7 @@ $ ->
         $('#category_list').append(link)
         category_setup()
         $("#new_category_input").val("")
+        update_dropdown()
       error: ->
         console.log('error')
 
@@ -97,8 +98,18 @@ $ ->
         single_listener($('.category_link'), 'click', ->
           update_category_link(this.getAttribute('category_id'))
         )
+        update_dropdown()
       error: ->
         console.log('error')
+
+  update_dropdown = ->
+    $.ajax
+      url: '/category/dropdown'
+      type: 'GET'
+      data: {}
+      success: (data, status, response) ->
+        $("#fixed_category_dropdown_content").html(response.responseText)
+        full_setup()
 
   delete_fixed_category = (category_id) ->
     $.ajax
