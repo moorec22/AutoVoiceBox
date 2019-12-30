@@ -94,7 +94,6 @@ $ ->
             $('#category_container').html(response.responseText)
             full_setup()
         $('#category_list').html(response.responseText)
-        # TODO: get all category clicks working
         single_listener($('.category_link'), 'click', ->
           update_category_link(this.getAttribute('category_id'))
         )

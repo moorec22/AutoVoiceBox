@@ -45,11 +45,24 @@
   <br />
   <br />
 
-  <% if !@current_category.nil? %>
-    <div id="category_container">
+  <div id="category_body">
+    <div id="category_container" class="column">
+    <% if !@current_category.nil? %>
       <%= render partial: "category/base", locals: {category: @current_category} %>
+    <% end %>
     </div>
-  <% end %>
+
+    <div id="fixed_category_container" class="column">
+      <div id="fixed_category_search" >
+        <input id="fixed_category_input" />
+      </div>
+
+      <br />
+      <% if !@current_category.nil? %>
+        <%= render partial: "category/base", locals: {category: @current_category} %>
+      <% end %>
+    </div>
+  </div>
   
   <br />
 </div>
