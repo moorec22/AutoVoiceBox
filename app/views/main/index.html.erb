@@ -1,4 +1,3 @@
-
 <div id="category_sidebar" class="sidebar">
   <div id="category_list">
     <% if !@categories.empty? %>
@@ -56,9 +55,7 @@
       <div id="fixed_category_search">
         <input id="fixed_category_input" placeholder="quick access..." />
         <div id="fixed_category_dropdown_content" class="dropdown-content">
-          <% @categories.each do |category| %>
-            <span class="fixed_category_link" category_id="<%= category.id %>"><%= category.name %></span>
-          <% end %>
+          <%= render partial: "category/dropdown", locals: {categories: @categories} %>
         </div>
       </div>
 

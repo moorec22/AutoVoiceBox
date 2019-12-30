@@ -137,7 +137,6 @@ $ ->
       delete_category(this.getAttribute('category_id'))
     )
     # override fixed category delete
-    console.log($("#fixed_category_inner_container"))
     single_listener($("#fixed_category_inner_container .category_delete"), 'click', ->
       delete_fixed_category(this.getAttribute('category_id'))
     )
