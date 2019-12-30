@@ -4,7 +4,7 @@
 
 .column {
   float: left;
-  width: 50%;
+  width: 45%;
   min-height: 100px;
 }
 
@@ -68,6 +68,10 @@
   float: right;
 }
 
+.phrase_content {
+  font-size: 60%;
+}
+
 .category_delete {
   float: right;
 }
@@ -87,6 +91,11 @@
 
 .givemespace {
   padding: 10px;
+}
+
+.left-border {
+  border-left: 1px solid black;
+  padding-left: 25px;
 }
 
 .draggable {
