@@ -1,4 +1,8 @@
 $ ->
+  # UTILITY FUNCTIONS
+  single_listener = (query, event, handler) ->
+    query.off(event).on(event, handler)
+
   # DRAG AND DROP SETUP
 
   drake = dragula({
@@ -177,13 +181,18 @@ $ ->
       save(input)
 
   phrase_setup = ->
-    $(".phrase_say").click(-> say(this.getAttribute('text')))
-
-    $(".phrase_delete").click(-> destroy(this.getAttribute('phrase_id')))
+    single_listener($('.phrase_say'), 'click', -> say(this.getAttribute('text')))
+    single_listener($('.phrase_delete'), 'click', -> destroy(this.getAttribute('phrase_id')))
 
   full_setup = ->
     phrase_setup()
     category_setup()
+
+  $("#new_category_input").keypress (event) ->
+    input = $("#new_category_input").val()
+    keycode = if event.keyCode then event.keyCode else event.which
+    if keycode == 13 and input
+      save_category(input)
 
   $("#new_category_button").click ->
     input = $("#new_category_input").val()
