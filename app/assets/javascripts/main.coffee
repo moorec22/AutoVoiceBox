@@ -10,7 +10,9 @@ $ ->
       return (el.classList.contains('phrase_box') &&
         target.classList.contains('category_body')) ||
         (el.classList.contains('outer_category_box') &&
-        target.classList.contains('category_column'));
+        target.classList.contains('category_column')) ||
+        (el.classList.contains('category_link') &&
+        target.classList.contains('category_list'));
   })
 
   drop = (el, target, source, sibling) ->
@@ -22,7 +24,6 @@ $ ->
         next_phrase_id = sibling.getAttribute('phrase_id')
       else
         next_phrase_id = null
-      console.log('here!!!')
       update_phrase(phrase_id, category_id, next_phrase_id)
     else if (el.classList.contains('outer_category_box') &&
         target.classList.contains('category_column'))
@@ -158,9 +159,10 @@ $ ->
     categories.push(document.querySelector('#phrase_queue'))
     for category in categories
       drake.containers.push(category)
-    drake.containers.push(document.querySelector('#category_column_left'))
-    drake.containers.push(document.querySelector('#category_column_right'))
-    drake.off('drop').on('drop', drop)
+    category_lists = (el for el in document.querySelectorAll('.category_list'))
+    for category_list in category_lists
+      drake.containers.push(category_list)
+    single_listener(drake, 'drop', drop)
 
   # PHRASE ACTIONS
 
