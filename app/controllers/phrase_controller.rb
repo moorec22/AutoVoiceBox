@@ -8,7 +8,8 @@ class PhraseController < ApplicationController
   def destroy
     PhraseCategory.where(phrase_id: params[:phrase_id]).each { |pc| pc.destroy! }
     phrase = Phrase.find(params[:phrase_id])
-    phrase.destroy!
+    phrase.destroy
+  rescue ActiveRecord::RecordNotFound
   end
 
   def update
