@@ -22,6 +22,7 @@ $ ->
         next_phrase_id = sibling.getAttribute('phrase_id')
       else
         next_phrase_id = null
+      console.log('here!!!')
       update_phrase(phrase_id, category_id, next_phrase_id)
     else if (el.classList.contains('outer_category_box') &&
         target.classList.contains('category_column'))
@@ -159,7 +160,7 @@ $ ->
       drake.containers.push(category)
     drake.containers.push(document.querySelector('#category_column_left'))
     drake.containers.push(document.querySelector('#category_column_right'))
-    drake.on('drop', drop)
+    drake.off('drop').on('drop', drop)
 
   # PHRASE ACTIONS
 
@@ -276,13 +277,15 @@ $ ->
     update_fixed_category(category_id)
   )
 
-  $("#new_category_button").click ->
+  single_listener($("#new_category_button"), 'click', ->
     input = $("#new_category_input").val()
     if input
       save_category(input)
+  )
 
-  $(".voice_selector").change ->
+  single_listener($(".voice_selector"), 'change', ->
     update_voice(this.options[this.selectedIndex].value)
+  )
 
   single_listener($(".category_link"), 'click', ->
     update_category_link(this.getAttribute('category_id'))
