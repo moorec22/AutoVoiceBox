@@ -56,6 +56,10 @@
   margin: 0px;
 }
 
+#phrase_queue {
+  min-height: 10px;
+}
+
 .phrase_new {
   width: 30%;
 }
@@ -68,16 +72,24 @@
   float: right;
 }
 
-.phrase_content {
-  font-size: 60%;
+.inner_phrase_box {
+  padding: 10px;
+}
+
+.category_box {
+  font-size: 50%;
+  padding: 10px;
 }
 
 .category_delete {
   float: right;
+  width: 20%;
 }
 
 .category_title_name {
+  margin-top: 0px;
   float: left;
+  width: 75%;
 }
 
 .voice_selector {
