@@ -264,7 +264,7 @@ $ ->
     input = event.target
     filter = input.value.toLowerCase()
     div = $('#fixed_category_dropdown_content')
-    for link in div.children().filter('a')
+    for link in div.children().filter('span')
       name = link.textContent.toLowerCase()
       if name.indexOf(filter) > -1
         link.style.display = ""
