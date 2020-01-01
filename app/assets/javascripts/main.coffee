@@ -26,7 +26,9 @@ $ ->
         next_phrase_id = null
       update_phrase(phrase_id, category_id, next_phrase_id)
     else if (el.classList.contains('outer_category_box') &&
-        target.classList.contains('category_column'))
+        target.classList.contains('category_column')) ||
+        (el.classList.contains('category_link') &&
+        target.classList.contains('category_list'))
       category_id = el.getAttribute('category_id')
       if sibling
         next_category_id = sibling.getAttribute('category_id')
