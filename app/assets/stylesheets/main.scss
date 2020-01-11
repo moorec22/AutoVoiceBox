@@ -4,8 +4,42 @@
 
 .column {
   float: left;
-  width: 50%;
+  width: 45%;
   min-height: 100px;
+}
+
+.sidebar {
+  height: 100%;
+  width: 160px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sidebar a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+}
+
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+.sidebar a.selected {
+  color: #f1f1f1;
+}
+
+.main {
+  margin-left: 160px; /* Same as the width of the sidenav */
+  font-size: 28px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
 }
 
 /* Clear floats after the columns */
@@ -22,6 +56,10 @@
   margin: 0px;
 }
 
+#phrase_queue {
+  min-height: 10px;
+}
+
 .phrase_new {
   width: 30%;
 }
@@ -34,12 +72,32 @@
   float: right;
 }
 
+.inner_phrase_box {
+  padding: 10px;
+  overflow: hidden;
+}
+
+.phrase_box {
+  font-size: 50%;
+}
+
+.category_box {
+  padding: 10px;
+}
+
+.category_box h2 {
+  font-size: 60%;
+}
+
 .category_delete {
   float: right;
+  width: 20%;
 }
 
 .category_title_name {
+  margin-top: 0px;
   float: left;
+  width: 75%;
 }
 
 .voice_selector {
@@ -51,7 +109,40 @@
   min-height: 10px;
 }
 
+.givemespace {
+  padding: 10px;
+}
+
+.left-border {
+  border-left: 1px solid black;
+  padding-left: 25px;
+}
 
 .draggable {
   -webkit-user-drag: element;
 }
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f6f6f6;
+  min-width: 230px;
+  border: 1px solid #ddd;
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content span {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 60%;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content span:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;}

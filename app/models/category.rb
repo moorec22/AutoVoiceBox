@@ -6,10 +6,6 @@ class Category < ApplicationRecord
     return Category.all.sort_by(&:position)
   end
 
-  def self.by_column(column)
-    Category.all.select { |category| category.column == column }
-  end
-
   def ordered_phrases
     phrase_categories.sort_by { |pc| pc.position }.map { |pc| pc.phrase }
   end
@@ -18,42 +14,37 @@ class Category < ApplicationRecord
     ordered_phrases.size
   end
 
-  def column
-    category_positions.first.try(:column) || 0
-  end
-  
   def position
     category_positions.first.try(:position) || Category.all.size
   end
 
-  def update_column!(column)
-    if category_positions.empty?
-      category_positions <<
-        CategoryPosition.create!(
-          category_id: id,
-          position: position,
-          column: column
-        )
-    else
-      category_positions.first.update!(column: column)
+  def update_position!(new_position)
+    set_position!(new_position)
+    ahead = Category.all.select do |category|
+      category.position >= new_position && category.id != self.id
+    end
+    distance = 1
+    ahead.each do |category|
+      category.set_position!(category.position + distance)
+      distance += 1
+    end
+    Category.all.each do |c|
+      puts c.name, c.position
     end
   end
 
-  def update_position!(position)
+  # set position without updating the work ahead
+  def set_position!(new_position)
     if category_positions.empty?
       category_positions <<
         CategoryPosition.create!(
           category_id: id,
-          position: position,
-          column: column
+          position: new_position,
         )
     else
-      category_positions.first.update!(position: position)
+      category_positions.first.update!(position: new_position)
     end
-    ahead = Category.all.select do |category|
-      category.column == column && category.position >= position
-    end
-    ahead.each { |category| category.update!(position: category.position + 1) }
+
   end
 end
 

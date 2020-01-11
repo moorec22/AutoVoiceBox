@@ -1,42 +1,65 @@
+<div id="category_sidebar" class="sidebar">
+   <%= render partial: "category/list", locals: {
+     categories: @categories,
+     current_category_id: @current_category.try(:id),
+   } %>
 
-<div id="phrase_form" align="center">
-  <input id="phrase_input" />
-  <input id="say" type="submit" value="Say" />
-  <input id="save" type="submit" value="Save" />
-  <select class="voice_selector">
-    <% @voices.each do |voice| %>
-      <option value="<%= voice %>"
-      <% if voice == @voice %>
-        selected="selected"
+  <br />
+
+  <div id="new_category_container" class="givemespace">
+    <input id="new_category_input" />
+    <input id="new_category_button" type="submit" value="New Category" />
+  </div>
+</div>
+
+<div class="main">
+  <div id="phrase_form" align="center">
+    <input id="phrase_input" />
+    <input id="say" type="submit" value="Say" />
+    <input id="save" type="submit" value="Save" />
+    <select class="voice_selector">
+      <% @voices.each do |voice| %>
+        <option value="<%= voice %>"
+        <% if voice == @voice %>
+          selected="selected"
+        <% end %>
+        ><%= voice %></option>
       <% end %>
-      ><%= voice %></option>
+    </select>
+    <br />
+    <br />
+    <div id="phrase_queue">
+      <% @phrases_without_category.each do |phrase| %>
+        <%= render partial: "phrase/base", locals: { phrase: phrase } %>
+        <br />
+      <% end %>
+    </div>
+  </div>
+  
+
+  <div id="category_body">
+    <div id="category_container" class="column">
+    <% if !@current_category.nil? %>
+      <%= render partial: "category/base", locals: {category: @current_category} %>
     <% end %>
-  </select>
-  <br />
-  <br />
-  <div id="phrase_queue">
-    <% @phrases_without_category.each do |phrase| %>
-      <%= render partial: "phrase", locals: { phrase: phrase } %>
+    </div>
+
+    <div id="fixed_category_container" class="column left-border">
+      <div id="fixed_category_search">
+        <input id="fixed_category_input" placeholder="quick access..." />
+        <div id="fixed_category_dropdown_content" class="dropdown-content">
+          <%= render partial: "category/dropdown", locals: {categories: @categories} %>
+        </div>
+      </div>
+
       <br />
-    <% end %>
+      <div id="fixed_category_inner_container">
+        <% if !@current_category.nil? %>
+          <%= render partial: "category/base", locals: {category: @fixed_category} %>
+        <% end %>
+      <div>
+    </div>
   </div>
-</div>
-
-<br />
-<br />
-<br />
-
-<div class="row">
-  <div id="category_column_left" class="column category_column" column="0">
-    <%= render partial: "category_list", locals: { categories: @categories.to_a.select { |category| category.column == 0 } } %>
-  </div>
-  <div id="category_column_right" class="column category_column" column="1">
-    <%= render partial: "category_list", locals: { categories: @categories.to_a.select { |category| category.column == 1 } } %>
-  </div>
-</div>
-
-<br />
-<div align="center">
-  <input id="new_category_input" />
-  <input id="new_category_button" type="submit" value="New Category" />
+  
+  <br />
 </div>

@@ -1,0 +1,8 @@
+<div class="category_list">
+  <% categories.each do |category| %>
+    <%= render partial: "category/link", locals: {
+      category: category,
+      current_category_id: current_category_id,
+    } %>
+  <% end %>
+</div>

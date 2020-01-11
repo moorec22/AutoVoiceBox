@@ -1,0 +1,14 @@
+<div class="outer_category_box" draggable="true" category_id="<%= category.id %>">
+  <div category_id="<%= category.id %>" class="box category_box">
+    <div class="category_title">
+      <h2 class="category_title_name"><%= category.name %></h2>
+      <input category_id="<%= category.id %>" class="category_delete" type="submit" value="Delete" />
+    </div>
+    <div category_id="<%= category.id %>" class="category_body">
+      <% category.ordered_phrases.each do |phrase| %>
+        <%= render partial: "phrase/base", locals: { phrase: phrase } %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
