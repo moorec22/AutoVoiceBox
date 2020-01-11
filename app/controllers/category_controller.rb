@@ -13,8 +13,9 @@ class CategoryController < ApplicationController
 
   def update
     category = Category.find(params[:category_id])
-    if params[:next_category_id].nil?
-      category.update_position!(Category.by_column(category.column).size)
+    puts params[:next_category_id].inspect
+    if params[:next_category_id].blank?
+      category.update_position!(Category.all.map { |c| c.position}.max + 1)
     else
       next_category = Category.find(params[:next_category_id])
       category.update_position!(next_category.position)
